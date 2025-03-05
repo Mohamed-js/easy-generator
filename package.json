@@ -5,9 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "npm install && npm run install-b && npm run install-f",
-    "install-f": "cd ./frontend && npm install",
-    "install-b": "cd ./backend && npm install",
     "dev": "concurrently \"npm run dev-b\" \"npm run dev-f\"",
     "dev-f": "cd ./frontend && npm run dev",
     "dev-b": "cd ./backend && npm run dev"

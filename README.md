@@ -30,7 +30,12 @@ cd easy-generator-test
 2. Install all dependencies:
 
 ```bash
-npm run install
+npm install
+cd backend
+npm install
+cd ../frontend
+npm install
+cd ..
 ```
 
 This will install dependencies for both **backend** and **frontend**.
@@ -51,7 +56,7 @@ FRONT_SECRET_KEY=SOME_SORT_OF_SECRET_KEYYYYY
 Create a `.env` file inside the `frontend/` directory with the following environment variables:
 
 ```
-VITE_API_URL=http://localhost:3000
+VITE_API_URL=http://localhost:3000/api
 VITE_FRONT_SECRET_KEY=SOME_SORT_OF_SECRET_KEYYYYY
 ```
 
