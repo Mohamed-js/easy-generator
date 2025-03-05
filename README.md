@@ -24,7 +24,7 @@ Make sure you have the following installed before running the project:
 
 ```bash
 git clone https://github.com/Mohamed-js/easy-generator.git
-cd easy-generator-test
+cd easy-generator
 ```
 
 2. Install all dependencies:
