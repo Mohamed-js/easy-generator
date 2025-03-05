@@ -23,7 +23,7 @@ Make sure you have the following installed before running the project:
 1. Clone the repository:
 
 ```bash
-git clone [https://github.com/Mohamed-js/easy-generator.git](https://github.com/Mohamed-js/easy-generator.git)
+git clone https://github.com/Mohamed-js/easy-generator.git
 cd easy-generator-test
 ```
 
