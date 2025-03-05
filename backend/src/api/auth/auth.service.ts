@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { User, UserDocument } from '../entities/user.entity';
+import { User, UserDocument } from '../../entities/user.entity';
 import { SignUpDto } from './dto/sign-up.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import { ConfigService } from '@nestjs/config';

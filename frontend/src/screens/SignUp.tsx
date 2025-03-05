@@ -7,6 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setToken } from "../store/sessionSlice";
+import api from "../config/axiosConfig";
 
 const signUpSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
@@ -42,18 +43,15 @@ const SignUp = () => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/auth/signup",
-        signUpData
-      );
+      const response = await api.post("/auth/signup", signUpData);
       const token = response.data.token;
       localStorage.setItem("token", token);
       dispatch(setToken(token));
       navigate("/");
       toast.success("Registered in successfully!");
     } catch (err: any) {
-      console.log(err);
-      err.response?.data?.message.forEach((msg) => {
+      console.error(err);
+      err.response?.data?.message.forEach((msg: string) => {
         toast.error(msg || "Something went wrong");
       });
     } finally {

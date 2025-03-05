@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import api from "../config/axiosConfig";
 
 interface User {
   _id: string;
@@ -16,14 +17,7 @@ const Profile = () => {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("No token found");
 
-        const response = await axios.get<User>(
-          "http://localhost:3000/auth/me",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await api.get<User>("/auth/me");
 
         setUser(response.data);
       } catch (err) {

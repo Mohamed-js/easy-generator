@@ -11,9 +11,6 @@ const sessionSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
     },
-    clearToken: (state) => {
-      state.token = null;
-    },
     logout: (state)=>{
       localStorage.removeItem("token");
       state.token = null;
@@ -21,5 +18,5 @@ const sessionSlice = createSlice({
   },
 });
 
-export const { setToken, clearToken, logout } = sessionSlice.actions;
+export const { setToken, logout } = sessionSlice.actions;
 export default sessionSlice.reducer;

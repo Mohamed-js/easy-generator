@@ -7,6 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setToken } from "../store/sessionSlice";
+import api from "../config/axiosConfig";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -38,10 +39,8 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/auth/signin",
-        loginData
-      );
+      const response = await api.post("/auth/signin", loginData);
+
       const token = response.data.token;
       localStorage.setItem("token", token);
       dispatch(setToken(token));
@@ -56,6 +55,7 @@ const Login = () => {
       navigate(redirectTo);
       toast.success("Logged in successfully!");
     } catch (err: any) {
+      console.error(err);
       toast.error(err.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);

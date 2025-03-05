@@ -19,6 +19,15 @@ export class JwtAuthGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const request: AuthRequest = context.switchToHttp().getRequest<AuthRequest>();
+
+    const secretHeader = request.headers['secretkey'] as string | undefined;
+    const secretKey = this.configService.get<string>('FRONT_SECRET_KEY');
+
+    if (!secretHeader || secretHeader !== secretKey) {
+      this.logger.warn('Missing or invalid secret key header');
+      throw new UnauthorizedException('Missing or invalid token');
+    }
+
     const authHeader = request.headers['authorization'] as string | undefined;
 
     if (!authHeader?.startsWith('Bearer ')) {

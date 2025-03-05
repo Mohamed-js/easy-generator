@@ -2,10 +2,11 @@ import { Controller, Post, Body, Get, Req, UseGuards, UnauthorizedException } fr
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/sign-up.dto';
 import { SignInDto } from './dto/sign-in.dto';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/jwt/jwt.guard';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiBearerAuth, ApiHeader } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/guards/jwtAuth/jwt.guard';
 import { Types } from 'mongoose';
 import { AuthRequest } from 'src/types/express';
+import { SecretAuthGuard } from 'src/guards/secretAuth/secret.guard';
 
 
 @ApiTags('Authentication')
@@ -14,6 +15,13 @@ export class AuthController {
     constructor(private readonly authService: AuthService) { }
 
     @Post('signup')
+    @UseGuards(SecretAuthGuard)
+    @ApiHeader({
+        name: 'SecretKey',
+        description: 'Secret API Key for Authentication',
+        required: true,
+        schema: { example: 'SOME_SORT_OF_SECRET_KEYYYYY' },
+    })
     @ApiOperation({ summary: 'User Sign-Up' })
     @ApiBody({ type: SignUpDto, description: 'User Sign-Up Payload' })
     @ApiResponse({ status: 201, description: 'User successfully signed up', schema: { example: { token: 'jwt_token_here' } } })
@@ -23,6 +31,13 @@ export class AuthController {
     }
 
     @Post('signin')
+    @UseGuards(SecretAuthGuard)
+    @ApiHeader({
+        name: 'SecretKey',
+        description: 'Secret API Key for Authentication',
+        required: true,
+        schema: { example: 'SOME_SORT_OF_SECRET_KEYYYYY' },
+    })
     @ApiOperation({ summary: 'User Sign-In' })
     @ApiBody({ type: SignInDto, description: 'User Sign-In Payload' })
     @ApiResponse({ status: 201, description: 'User successfully signed in', schema: { example: { token: 'jwt_token_here' } } })
@@ -31,10 +46,15 @@ export class AuthController {
         return this.authService.signIn(signInDto);
     }
 
-
     @Get('me')
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
+    @ApiHeader({
+        name: 'SecretKey',
+        description: 'Secret API Key for Authentication',
+        required: true,
+        schema: { example: 'SOME_SORT_OF_SECRET_KEYYYYY' },
+    })
     @ApiOperation({ summary: 'Get Current Authenticated User' })
     @ApiResponse({
         status: 200,
