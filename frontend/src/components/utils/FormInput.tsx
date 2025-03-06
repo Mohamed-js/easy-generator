@@ -23,7 +23,7 @@ const FormInput = ({
         id={name}
         type={type}
         placeholder={placeholder}
-        {...props} // This will now correctly pass onChange, value, and other input props
+        {...props}
       />
     </div>
   );

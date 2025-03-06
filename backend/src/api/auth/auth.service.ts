@@ -29,7 +29,7 @@ export class AuthService {
     }
 
     const user = await this.userModel.create({ email, name, password });
-    const token: string = this.generateToken(user._id);
+    const token: string = this.jwtService.sign({ userId: user._id });
     return { token };
   }
 
@@ -46,7 +46,7 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const token: string = this.generateToken(user._id);
+    const token: string = this.jwtService.sign({ userId: user._id });
     return { token };
   }
 
@@ -54,9 +54,5 @@ export class AuthService {
     const user = await this.userModel.findById(userId).select('_id email name');
 
     return { user };
-  }
-
-  private generateToken(userId: Types.ObjectId): string {
-    return this.jwtService.sign({ userId });
   }
 }

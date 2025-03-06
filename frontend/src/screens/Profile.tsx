@@ -10,9 +10,11 @@ interface User {
 
 const Profile = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const getUser = async () => {
+      setLoading(true);
       try {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("No token found");
@@ -26,11 +28,21 @@ const Profile = () => {
             ? err.response.data.message
             : "Failed to fetch user";
         console.error(errorMessage);
+      } finally {
+        setLoading(false);
       }
     };
 
     getUser();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[80vh]">
+        <p>Getting user info...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-8">
@@ -48,7 +60,7 @@ const Profile = () => {
           </p>
         </>
       ) : (
-        <p>Loading...</p>
+        <p>Failed to get User info...</p>
       )}
     </div>
   );
