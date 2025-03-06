@@ -55,13 +55,14 @@ export class AuthService {
     }
 
     private generateToken(userId: Types.ObjectId): string {
-        const jwtSecret = this.configService.get<string>('JWT_SECRET');
-        if (!jwtSecret) {
-            throw new Error('JWT_SECRET is not defined');
-        }
-        return this.jwtService.sign({ userId }, {
-            secret: jwtSecret,
-            expiresIn: '1d',
-        });
+        // const jwtSecret = this.configService.get<string>('JWT_SECRET');
+        // if (!jwtSecret) {
+        //     throw new Error('JWT_SECRET is not defined');
+        // }
+        // return this.jwtService.sign({ userId }, {
+        //     secret: jwtSecret,
+        //     expiresIn: '1d',
+        // });
+        return this.jwtService.sign({ userId });
     }
 }
